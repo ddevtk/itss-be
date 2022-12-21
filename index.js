@@ -55,12 +55,7 @@ app.use(cookieParser());
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader(
-    'Access-Control-Allow-Origin',
-    app.get('env') !== 'production'
-      ? 'http://localhost:3000'
-      : process.env.CORS_ORIGIN,
-  );
+  res.setHeader('Access-Control-Allow-Origin', 'https://itss-fe.vercel.app');
 
   // Request methods you wish to allow
   res.setHeader(
