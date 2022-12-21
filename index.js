@@ -33,16 +33,6 @@ app.use(express.static(path.join(__dirname, '../frontend/build')));
 
 const dev = app.get('env') !== 'production';
 
-if (!dev) {
-  app.disable('x-powered-by');
-  app.use(morgan('common'));
-  app.get('*', (req, res) =>
-    res.sendFile(path.join(__dirname, '../frontend/build/index.html')),
-  );
-} else {
-  app.use(morgan('dev'));
-}
-
 // ================== Connect mongodb with mongoose ==================
 const mongoose = require('mongoose');
 const MONGO_URL = dev ? process.env.MONGO_URL_LOCAL : process.env.MONGO_URL;
