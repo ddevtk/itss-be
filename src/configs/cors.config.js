@@ -12,7 +12,7 @@ const corsConfig = {
   credentials: true,
 
   allowedHeaders:
-    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
+    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Authorization',
 
   //Configures the Access-Control-Expose-Headers
   exposedHeaders: 'Content-Range,X-Content-Range,Authorization',
