@@ -60,21 +60,16 @@ app.listen(PORT, () => {
 });
 console.log('hello');
 // ================== Apis ==================
-const BASE_URL = '/apis';
-app.get(`${BASE_URL}/test`, (req, res, next) => {
+app.get('/test', (req, res, next) => {
   res.json({ message: 'hello' });
 });
-app.use(`${BASE_URL}/account`, accountApi);
-app.use(`${BASE_URL}/word`, wordApi);
-app.use(`${BASE_URL}/games`, gameApi);
-app.use(`${BASE_URL}/flashcard`, flashcardApi);
-app.use(`${BASE_URL}/common`, commonApi);
-app.use(`${BASE_URL}/sentence`, sentenceApi);
-app.use(`${BASE_URL}/blog`, blogApi);
-app.use(
-  `${BASE_URL}/highscore`,
-  passportConfig.jwtAuthentication,
-  highscoreApi,
-);
+app.use('/account', accountApi);
+app.use('/word', wordApi);
+app.use('/games', gameApi);
+app.use('/flashcard', flashcardApi);
+app.use('/common', commonApi);
+app.use('/sentence', sentenceApi);
+app.use('/blog', blogApi);
+app.use('/highscore', passportConfig.jwtAuthentication, highscoreApi);
 
 module.exports = app;
