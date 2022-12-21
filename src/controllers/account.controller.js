@@ -292,7 +292,6 @@ exports.putUpdateProfile = async (req, res, next) => {
 };
 
 exports.getUserInfo = async (req, res) => {
-  console.log('hjello');
   try {
     const { isAuth = false } = res.locals;
     if (!isAuth) {

@@ -11,6 +11,10 @@ exports.jwtAuthentication = async (req, res, next) => {
   try {
     res.locals.isAuth = false;
     let token = req.cookies ? req.cookies[KEYS.JWT_TOKEN] : null;
+    console.log(
+      '🚀 ~ file: passport.middleware.js:14 ~ exports.jwtAuthentication= ~ token',
+      token,
+    );
 
     // if not exist cookie[access_token] -> isAuth = false -> next
     if (!token) {
@@ -20,8 +24,16 @@ exports.jwtAuthentication = async (req, res, next) => {
 
     // verify jwt
     const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log(
+      '🚀 ~ file: passport.middleware.js:27 ~ exports.jwtAuthentication= ~ decoded',
+      decoded,
+    );
     if (decoded) {
       const { accountId } = decoded.sub;
+      console.log(
+        '🚀 ~ file: passport.middleware.js:33 ~ exports.jwtAuthentication= ~ accountId',
+        accountId,
+      );
       let user = await UserModel.findOne({ accountId }).select(
         '-_id username name avt favoriteList coin',
       );
