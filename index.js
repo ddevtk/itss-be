@@ -51,7 +51,7 @@ mongoose
 app.use(express.json({ limit: MAX.SIZE_JSON_REQUEST }));
 app.use(express.urlencoded({ limit: MAX.SIZE_JSON_REQUEST }));
 app.use(cookieParser());
-app.set('trust proxy', 1);
+
 app.use(cors(corsConfig));
 
 // ================== Listening ... ==================
