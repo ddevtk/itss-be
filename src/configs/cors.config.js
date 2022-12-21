@@ -4,7 +4,7 @@ const app = express();
 
 const corsConfig = {
   // Configures the Access-Control-Allow-Origin
-  origin: 'https://itss-fe.vercel.app/',
+  origin: 'https://itss-pms0ku0qb-ddevtk.vercel.app/',
 
   // Configures the Access-Control-Allow-Methods
   methods: 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
