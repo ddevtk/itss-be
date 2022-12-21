@@ -8,48 +8,46 @@ const FacebookTokenStrategy = require('passport-facebook-token');
 
 // Authentication with JWT
 exports.jwtAuthentication = async (req, res, next) => {
-  try {
-    res.locals.isAuth = false;
-    let token = req.cookies ? req.cookies[KEYS.JWT_TOKEN] : null;
-    console.log(
-      '🚀 ~ file: passport.middleware.js:14 ~ exports.jwtAuthentication= ~ token',
-      token,
-    );
-
-    // if not exist cookie[access_token] -> isAuth = false -> next
-    if (!token) {
-      next();
-      return;
-    }
-
-    // verify jwt
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    console.log(
-      '🚀 ~ file: passport.middleware.js:27 ~ exports.jwtAuthentication= ~ decoded',
-      decoded,
-    );
-    if (decoded) {
-      const { accountId } = decoded.sub;
+  let token;
+  console.log(
+    '🚀 ~ file: passport.middleware.js:15 ~ exports.jwtAuthentication= ~ req.headers.authorization',
+    req.headers.authorization,
+  );
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      // verify jwt
+      const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
       console.log(
-        '🚀 ~ file: passport.middleware.js:33 ~ exports.jwtAuthentication= ~ accountId',
-        accountId,
-      );
-      let user = await UserModel.findOne({ accountId }).select(
-        '-_id username name avt favoriteList coin',
+        '🚀 ~ file: passport.middleware.js:19 ~ exports.jwtAuthentication= ~ decoded',
+        decoded,
       );
 
-      if (user) {
-        user.accountId = accountId;
-        res.locals.isAuth = true;
-        req.user = user;
+      if (decoded) {
+        const { accountId } = decoded.sub;
+
+        let user = await UserModel.findOne({ accountId }).select(
+          '-_id username name avt favoriteList coin',
+        );
+        if (user) {
+          user.accountId = accountId;
+          req.user = user;
+        }
       }
+      next();
+    } catch (error) {
+      return res.status(401).json({
+        message: 'Unauthorized.',
+        error,
+      });
     }
-    next();
-  } catch (error) {
-    console.error('Authentication with JWT ERROR: ', error);
-    return res.status(401).json({
-      message: 'Unauthorized.',
-      error,
+  }
+  if (!token) {
+    res.status(401).json({
+      message: 'No authorized. No token.',
     });
   }
 };

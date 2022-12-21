@@ -4,14 +4,10 @@ const app = express();
 
 const corsConfig = {
   // Configures the Access-Control-Allow-Origin
-  origin: 'https://itss-fe.vercel.app',
+  origin: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000',
 
   // Configures the Access-Control-Allow-Methods
   methods: 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
-
-  //Configures the Access-Control-Allow-Headers
-  allowedHeaders:
-    'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept',
 
   // Configures the Access-Control-Allow-Credentials
   credentials: true,

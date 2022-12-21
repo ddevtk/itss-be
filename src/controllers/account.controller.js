@@ -89,10 +89,6 @@ exports.postLogin = async (req, res) => {
       process.env.JWT_SECRET_KEY || 'dynonary-serect',
       { accountId: account._id },
     );
-    res.cookie(KEYS.JWT_TOKEN, token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + COOKIE_EXPIRES_TIME),
-    });
 
     return res.status(200).json({
       message: 'success',
@@ -135,11 +131,6 @@ exports.postLoginSocialNetwork = async (req, res) => {
       process.env.JWT_SECRET_KEY || 'dynonary-serect',
       { accountId },
     );
-
-    res.cookie(KEYS.JWT_TOKEN, token, {
-      httpOnly: true,
-      expires: new Date(Date.now() + COOKIE_EXPIRES_TIME),
-    });
 
     return res.status(200).json({
       message: 'success',
@@ -293,10 +284,6 @@ exports.putUpdateProfile = async (req, res, next) => {
 
 exports.getUserInfo = async (req, res) => {
   try {
-    const { isAuth = false } = res.locals;
-    if (!isAuth) {
-      return res.status(401).json({ message: 'Failed' });
-    }
     return res.status(200).json({ user: req.user });
   } catch (error) {
     console.error('GET USER INFO ERROR: ', error);
