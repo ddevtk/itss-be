@@ -9,10 +9,7 @@ const FacebookTokenStrategy = require('passport-facebook-token');
 // Authentication with JWT
 exports.jwtAuthentication = async (req, res, next) => {
   let token;
-  console.log(
-    '🚀 ~ file: passport.middleware.js:15 ~ exports.jwtAuthentication= ~ req.headers.authorization',
-    req.headers.authorization,
-  );
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
