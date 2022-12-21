@@ -43,70 +43,70 @@ exports.jwtAuthentication = async (req, res, next) => {
 };
 
 // Authentication with Google OAuth2
-passport.use(
-  new GooglePlusTokenStrategy(
-    {
-      clientID: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    },
-    function (accessToken, refreshToken, profile, done) {
-      try {
-        if (!Boolean(profile)) {
-          done(null, null);
-          return;
-        }
+// passport.use(
+//   new GooglePlusTokenStrategy(
+//     {
+//       clientID: process.env.GOOGLE_CLIENT_ID,
+//       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+//     },
+//     function (accessToken, refreshToken, profile, done) {
+//       try {
+//         if (!Boolean(profile)) {
+//           done(null, null);
+//           return;
+//         }
 
-        const {
-          given_name: givenName,
-          family_name: familyName,
-          email,
-          picture,
-          id,
-        } = profile._json;
+//         const {
+//           given_name: givenName,
+//           family_name: familyName,
+//           email,
+//           picture,
+//           id,
+//         } = profile._json;
 
-        done(null, {
-          type: ACCOUNT_TYPES.GOOGLE,
-          name: `${givenName} ${familyName}`,
-          email,
-          avt: picture,
-          id,
-        });
-      } catch (error) {
-        done(error, null);
-        return;
-      }
-    },
-  ),
-);
+//         done(null, {
+//           type: ACCOUNT_TYPES.GOOGLE,
+//           name: `${givenName} ${familyName}`,
+//           email,
+//           avt: picture,
+//           id,
+//         });
+//       } catch (error) {
+//         done(error, null);
+//         return;
+//       }
+//     },
+//   ),
+// );
 
-// Authentication with Facebook OAuth2
-passport.use(
-  new FacebookTokenStrategy(
-    {
-      clientID: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      fbGraphVersion: 'v3.0',
-    },
-    function (accessToken, refreshToken, profile, done) {
-      try {
-        if (!Boolean(profile)) {
-          done(null, null);
-          return;
-        }
+// // Authentication with Facebook OAuth2
+// passport.use(
+//   new FacebookTokenStrategy(
+//     {
+//       clientID: process.env.FACEBOOK_CLIENT_ID,
+//       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+//       fbGraphVersion: 'v3.0',
+//     },
+//     function (accessToken, refreshToken, profile, done) {
+//       try {
+//         if (!Boolean(profile)) {
+//           done(null, null);
+//           return;
+//         }
 
-        const { name, email, id } = profile._json;
+//         const { name, email, id } = profile._json;
 
-        done(null, {
-          type: ACCOUNT_TYPES.FACEBOOK,
-          name,
-          email,
-          avt: profile.photos[0]?.value,
-          id,
-        });
-      } catch (error) {
-        done(error, null);
-        return;
-      }
-    },
-  ),
-);
+//         done(null, {
+//           type: ACCOUNT_TYPES.FACEBOOK,
+//           name,
+//           email,
+//           avt: profile.photos[0]?.value,
+//           id,
+//         });
+//       } catch (error) {
+//         done(error, null);
+//         return;
+//       }
+//     },
+//   ),
+// );
